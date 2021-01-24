@@ -1,0 +1,180 @@
+import java.util.*;
+import java.util.Scanner;
+
+//package com.journaldev.design.chainofresponsibility;
+
+/*int get_value(int amount)
+{
+	return amount;
+}*/
+class rupees // getting the amount from user
+{
+	public
+    int amount;
+	rupees(int a)
+	{
+		this.amount=a;
+	}
+	public int get_value()
+	{
+		return this.amount;
+	}
+}
+
+//creating an interface
+interface chain {
+
+	void set_next(chain nex); // setting chain 
+	void withdraw(rupees r); // withdraw amount 
+}
+
+class rupees_2000 implements chain //for 2000 rupee
+{
+	private chain ch;
+	
+	@Override
+	public void set_next(chain nex) 
+	{
+		this.ch = nex;
+	}
+
+	@Override
+	public void withdraw(rupees r) 
+	{
+		if(r.get_value() >= 2000)
+		{
+			int number = r.get_value()/2000;
+			int remain = r.get_value() % 2000; // remaining value
+			System.out.println("\n Number of 2000 rupee note is: "+ number );
+			if(remain !=0) 
+			    this.ch.withdraw(new rupees(remain));
+		}
+		else
+		{
+			this.ch.withdraw(r);
+		}
+	}
+}
+
+class rupees_500 implements chain //for 500 rupee
+{
+	private chain ch;
+	
+	@Override
+	public void set_next(chain nex) 
+	{
+		this.ch = nex;
+	}
+
+	@Override
+	public void withdraw(rupees r) 
+	{
+		if(r.get_value() >= 500)
+		{
+			int number = r.get_value()/500;
+			int remain = r.get_value() % 500; // remaining value
+			System.out.println("\n Number of 500 rupee note is: "+ number );
+			if(remain !=0) 
+			    this.ch.withdraw(new rupees(remain));
+		}
+		else
+		{
+			this.ch.withdraw(r);
+		}
+	}
+}
+
+class rupees_200 implements chain //for 200 rupee
+{
+	private chain ch;
+	
+	@Override
+	public void set_next(chain nex) 
+	{
+		this.ch = nex;
+	}
+
+	@Override
+	public void withdraw(rupees r) 
+	{
+		if(r.get_value() >= 200)
+		{
+			int number = r.get_value()/200;
+			int remain = r.get_value() % 200; // remaining value
+			System.out.println("\n Number of 200 rupee note is: "+ number );
+			if(remain !=0) 
+			    this.ch.withdraw(new rupees(remain));
+		}
+		else
+		{
+			this.ch.withdraw(r);
+		}
+	}
+}
+
+class rupees_100 implements chain //for 100 rupee
+{
+	private chain ch;
+	
+	@Override
+	public void set_next(chain nex) 
+	{
+		this.ch = nex;
+	}
+
+	@Override
+	public void withdraw(rupees r) 
+	{
+		if(r.get_value() >= 100)
+		{
+			int number = r.get_value()/100;
+			int remain = r.get_value() % 100; // remaining value
+			System.out.println("\n Number of 100 rupee note is: "+ number );
+			if(remain !=0) 
+			    this.ch.withdraw(new rupees(remain));
+		}
+		else
+		{
+			this.ch.withdraw(r);
+		}
+	}
+}
+
+public class Main 
+{
+	public 
+	chain c1;
+	Main() 
+	{
+		// start the cash outcome
+		this.c1 = new rupees_2000();
+		chain c2 = new rupees_500();
+		chain c3 = new rupees_200();
+		chain c4 = new rupees_100();
+		
+		// set the withdrawl chain
+		c1.set_next(c2);
+		c2.set_next(c3);
+		c3.set_next(c4);
+	}
+	public static void main(String[] args) 
+	{
+		Main a = new Main();
+		while (true) 
+		{
+			int amount = 0;
+			System.out.println("\n Enter the amount/money you want to withdraw in multiple of 10:");
+			Scanner input = new Scanner(System.in);
+			amount = input.nextInt();
+			if (amount % 10 != 0) 
+			{
+				System.out.println("\n The amount should be in multiple of 10");
+				return;
+			}
+			// process the request
+			a.c1.withdraw(new rupees(amount));
+		}
+
+	}
+
+}
