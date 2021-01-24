@@ -1,12 +1,6 @@
 import java.util.*;
 import java.util.Scanner;
 
-//package com.journaldev.design.chainofresponsibility;
-
-/*int get_value(int amount)
-{
-	return amount;
-}*/
 class rupees // getting the amount from user
 {
 	public
